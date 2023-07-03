@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Personal Portfolio</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+              <!-- header section start from here -->
+<header>
+    <a href="index.html" class="header_logo" ><img src="image/logo-white.svg" alt="Logo" width="100%"></a>
+    <div id="menuItems">
+        <ul>
+            <li><a href="index.html" class="navLinks">HOME</a></li>
+            <li><a href="#about_me" class="navLinks">ABOUT ME</a></li>
+            <li><a href="#services" class="navLinks">SERVICES</a></li>
+            <li><a href="#portfolios" class="navLinks">PORTFOLIOS</a></li>
+            <li><a href="#contact" class="navLinks">CONTACT</a></li>
+        </ul>
+    </div><!-- menu items -->
+
+        <!-- on scroll events -->
+    <script>
+        window.onscroll = function() {wScroll()};
+        function wScroll() {
+            // sticky header
+            if (document.documentElement.scrollTop > 80) {
+                document.querySelector("header").className = "sticky";
+                document.querySelector(".header_logo img").src = "image/logo.svg";
+            } else {
+                document.querySelector("header").className = "";
+                document.querySelector(".header_logo img").src = "image/logo-white.svg";
+            }
+        };
+    </script>
+</header><!-- header section -->
+
+    <!-- main contents start from here -->
+<main id="main_content">
+
+                <!-- banner section start from here -->
+<div id="banner">
+    <div class="container main_content">
+        <h1 class="text">WELCOME TO MY WORLD</h1>
+        <h1 class="autoText"><span style="color: #eee;">I'm</span> <span class="txt-rotate" data-period="2000" data-rotate='[ "John Doe.", "a Public Speaker.", "a Life Coach.", "a Writer.", "an Entrepreneur." ]'></span></h1>
+        <script>
+            // auto typing
+            let TxtRotate = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 0) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+            };
+
+            TxtRotate.prototype.tick = function() {
+            let i = this.loopNum % this.toRotate.length;
+            let fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+            let that = this;
+            let delta = 100 - Math.random() * 100;
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 1000;
+            }
+
+            setTimeout(function() {
+                that.tick();
+            }, delta);
+            };
+
+            window.onload = function() {
+            let elements = document.getElementsByClassName('txt-rotate');
+            for (let i=0; i<elements.length; i++) {
+                let toRotate = elements[i].getAttribute('data-rotate');
+                let period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                new TxtRotate(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // add css
+                let css = document.createElement("style");
+                document.body.appendChild(css);
+            };
+        </script>
+        <div><a href="#" class="hireBtn">HIRE ME</a></div>
+    </div><!-- container -->
+</div><!-- banner section -->
+
+</main><!-- main contents -->
+</body>
+</html>
